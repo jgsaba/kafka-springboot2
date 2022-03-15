@@ -2,6 +2,7 @@ package com.casadocodigo.shopapi.dto;
 
 import com.casadocodigo.shopapi.persistence.entity.Shop;
 import com.casadocodigo.shopapi.shopping.ShopStatus;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
 

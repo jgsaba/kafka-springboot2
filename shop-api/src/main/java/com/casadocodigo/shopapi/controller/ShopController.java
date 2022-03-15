@@ -3,6 +3,7 @@ package com.casadocodigo.shopapi.controller;
 import com.casadocodigo.shopapi.dto.ShopDTO;
 import com.casadocodigo.shopapi.persistence.entity.Shop;
 import com.casadocodigo.shopapi.persistence.repository.ShopRepository;
+import com.casadocodigo.shopapi.shopping.kafka.KafkaClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ public class ShopController {
 
     private final ShopRepository shopRepository;
 
+    private final KafkaClient kafkaClient;
+
     @GetMapping
     public List<ShopDTO> getShop(){
         return shopRepository.findAll()
@@ -26,7 +29,10 @@ public class ShopController {
 
     @PostMapping
     public ShopDTO saveShop(@RequestBody ShopDTO shopDTO){
-        Shop newShop = Shop.convert(shopDTO.startUpNewShop());
-        return ShopDTO.convert(shopRepository.save(newShop));
+        Shop newShop = shopRepository.save(Shop.convert(shopDTO.startUpNewShop()));
+        ShopDTO newShopDTO = ShopDTO.convert(newShop);
+        kafkaClient.sendMessage(newShopDTO);
+
+        return newShopDTO;
     }
 }

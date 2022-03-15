@@ -1,0 +1,13 @@
+package com.casadocodigo.shopvalidator.persistence.repository;
+
+import com.casadocodigo.shopvalidator.persistence.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long> {
+
+    Optional<Product> findByProductIdentifier(String productIdentifier);
+}
