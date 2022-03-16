@@ -19,6 +19,9 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private	Long id;
 
+    @Column(name = "buyer_identifier")
+    private String buyerIdentifier;
+
     private	String identifier;
 
     @Enumerated(EnumType.STRING)

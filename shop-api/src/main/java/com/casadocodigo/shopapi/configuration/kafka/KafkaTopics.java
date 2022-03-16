@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum KafkaTopics {
 
-    SHOP_TOPIC("SHOP_TOPIC", 3, 1),
+    SHOP_TOPIC("SHOP_TOPIC", 6, 1),
     SHOP_TOPIC_EVENT("SHOP_TOPIC_EVENT", 3, 1);
 
     private final String name;

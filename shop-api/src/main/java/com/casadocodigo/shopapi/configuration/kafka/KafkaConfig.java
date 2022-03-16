@@ -1,17 +1,14 @@
 package com.casadocodigo.shopapi.configuration.kafka;
 
 import com.casadocodigo.shopapi.dto.ShopDTO;
-import com.casadocodigo.shopapi.shopping.kafka.KafkaClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
@@ -26,9 +23,14 @@ public class KafkaConfig {
     @Value("${kafka.bootstrap-server:localhost:9092}")
     private String bootstrapServerAddress;
 
-    @Bean
+    private final String SHOP_TOPIC = KafkaTopics.SHOP_TOPIC.getName();
+
+    @Bean(name = "shopTopicDispatcher")
     public KafkaTemplate<String, ShopDTO> kafkaTemplate(){
-        return new KafkaTemplate<>(producerFactory());
+        KafkaTemplate<String, ShopDTO> shopTopic = new KafkaTemplate<>(producerFactory());
+        shopTopic.setDefaultTopic(SHOP_TOPIC);
+
+        return shopTopic;
     }
 
     @Bean

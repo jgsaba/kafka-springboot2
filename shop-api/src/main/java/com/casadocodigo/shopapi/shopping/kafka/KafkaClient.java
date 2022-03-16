@@ -5,15 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import static com.casadocodigo.shopapi.configuration.kafka.KafkaTopics.SHOP_TOPIC;
-
 @Service
 @RequiredArgsConstructor
 public class KafkaClient {
 
-    private final KafkaTemplate<String, ShopDTO> kafkaTemplate;
+    private final KafkaTemplate<String, ShopDTO> shopTopicDispatcher;
 
     public void sendMessage(ShopDTO shopDTO){
-        kafkaTemplate.send(SHOP_TOPIC.getName(), shopDTO);
+        shopTopicDispatcher.sendDefault(shopDTO.getBuyerIdentifier(), shopDTO);
     }
 }

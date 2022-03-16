@@ -17,6 +17,8 @@ public class ShopDTO {
 
     private	String identifier;
 
+    private String buyerIdentifier;
+
     private	String status;
 
     private LocalDate dateShop;
@@ -26,6 +28,7 @@ public class ShopDTO {
     public static ShopDTO convert(Shop shop){
         return ShopDTO.builder()
                 .identifier(shop.getIdentifier())
+                .buyerIdentifier(shop.getBuyerIdentifier())
                 .status(shop.getStatus().toString())
                 .dateShop(shop.getDateShop())
                 .items(shop.getItems()
